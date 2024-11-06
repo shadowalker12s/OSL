@@ -1,23 +1,27 @@
 #!/bin/bash
 
-# Function to insert a record into the address book
-insert() {
-    echo -e "\nEnter Shop Name:"
-    read name
-    echo "Enter Address:"
-    read address
-    echo "Enter Shop Id:"
-    read shopid
-    echo "Name: $name, Address: $address, Shop Id: $shopid" >> file2.txt
-    echo "Insertion Successful!"
-}
-
 # Function to create the address book file
 create() {
     echo -e "\nEnter File Name: "
     read filename
     touch "$filename"
     echo "File $filename has been created."
+}
+
+# Function to insert a record into the address book
+insert() {
+    if [ -z "$filename" ]; then
+        echo "Error: No address book file created. Please use the 'Create' option first."
+        return
+    fi
+    echo -e "\nEnter Shop Name:"
+    read name
+    echo "Enter Address:"
+    read address
+    echo "Enter Shop Id:"
+    read shopid
+    echo "Name: $name, Address: $address, Shop Id: $shopid" >> $filename
+    echo "Insertion Successful!"
 }
 
 # Function to display all records in the address book
