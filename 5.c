@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// Function to check if a resource request can be granted
 int checkRequest(int request[], int avail[], int r) {
     for (int i = 0; i < r; i++) {
         if (request[i] > avail[i]) {
@@ -11,6 +12,8 @@ int checkRequest(int request[], int avail[], int r) {
 
 int main() {
     int n, r, i, j, k;
+
+    // Input the number of processes and resources
     printf("Enter the number of processes (n): ");
     scanf("%d", &n);
     printf("Enter the number of resources (r): ");
@@ -18,7 +21,7 @@ int main() {
 
     int alloc[n][r], max[n][r], avail[r];
 
-    // Input Allocation Matrix
+    // Input the Allocation Matrix
     printf("Enter the Allocation Matrix:\n");
     for (i = 0; i < n; i++) {
         for (j = 0; j < r; j++) {
@@ -26,7 +29,7 @@ int main() {
         }
     }
 
-    // Input Maximum Matrix
+    // Input the Maximum Matrix
     printf("Enter the MAX Matrix:\n");
     for (i = 0; i < n; i++) {
         for (j = 0; j < r; j++) {
@@ -71,10 +74,18 @@ int main() {
     }
 
     int need[n][r];
-    // Calculate Need Matrix
+    // Calculate Need Matrix and check for negative values
     for (i = 0; i < n; i++) {
         for (j = 0; j < r; j++) {
+            if (max[i][j] < alloc[i][j]) {
+                printf("Error: Allocation exceeds Max for P%d, resource %d.\n", i, j);
+                return 0;
+            }
             need[i][j] = max[i][j] - alloc[i][j];
+            if (need[i][j] < 0) {
+                printf("Error: Need cannot be negative for P%d, resource %d.\n", i, j);
+                return 0;
+            }
         }
     }
 
@@ -103,10 +114,11 @@ int main() {
 
     // Display Safe Sequence
     printf("The Safe Sequence is as follows:\n");
-    for (i = 0; i < n - 1; i++) {
-        printf("P%d -> ", ans[i]);
+    for (i = 0; i < ind; i++) {
+        printf("P%d", ans[i]);
+        if (i != ind - 1) printf(" -> ");
     }
-    printf("P%d\n", ans[n - 1]);
+    printf("\n");
 
     // Request additional resources for a process
     int request[r], process;
@@ -161,10 +173,11 @@ int main() {
 
         // Display Safe Sequence after granting the request
         printf("The Safe Sequence after granting the request is as follows:\n");
-        for (i = 0; i < n - 1; i++) {
-            printf("P%d -> ", ans[i]);
+        for (i = 0; i < ind; i++) {
+            printf("P%d", ans[i]);
+            if (i != ind - 1) printf(" -> ");
         }
-        printf("P%d\n", ans[n - 1]);
+        printf("\n");
     } else {
         printf("Request exceeds available resources. Cannot Proceed.\n");
     }

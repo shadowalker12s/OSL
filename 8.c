@@ -43,13 +43,18 @@ void sstf(int tracks[], int n, int head) {
     printf("Total Seek Time: %d\n", totalSeekTime);
 }
 
+// Integer comparison function for qsort (sorting integers)
+int compareInt(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
 // SCAN Disk Scheduling Algorithm
 void scan(int tracks[], int n, int head) {
     int totalSeekTime = 0;
     printf("SCAN Disk Scheduling:\n");
 
-    // Sort tracks
-    qsort(tracks, n, sizeof(int), (int(*)(const void *, const void *)) strcmp);
+    // Sort tracks using the compareInt function
+    qsort(tracks, n, sizeof(int), compareInt);
 
     // Move towards higher numbers first
     int i;
@@ -75,8 +80,8 @@ void cscan(int tracks[], int n, int head) {
     int totalSeekTime = 0;
     printf("C-SCAN Disk Scheduling:\n");
 
-    // Sort tracks
-    qsort(tracks, n, sizeof(int), (int(*)(const void *, const void *)) strcmp);
+    // Sort tracks using the compareInt function
+    qsort(tracks, n, sizeof(int), compareInt);
 
     // Move towards higher numbers
     int i;
@@ -108,8 +113,8 @@ void look(int tracks[], int n, int head) {
     int totalSeekTime = 0;
     printf("LOOK Disk Scheduling:\n");
 
-    // Sort tracks
-    qsort(tracks, n, sizeof(int), (int(*)(const void *, const void *)) strcmp);
+    // Sort tracks using the compareInt function
+    qsort(tracks, n, sizeof(int), compareInt);
 
     // Move towards higher numbers first
     int i;
@@ -135,8 +140,8 @@ void clook(int tracks[], int n, int head) {
     int totalSeekTime = 0;
     printf("C-LOOK Disk Scheduling:\n");
 
-    // Sort tracks
-    qsort(tracks, n, sizeof(int), (int(*)(const void *, const void *)) strcmp);
+    // Sort tracks using the compareInt function
+    qsort(tracks, n, sizeof(int), compareInt);
 
     // Move towards higher numbers
     int i;
